@@ -1,3 +1,9 @@
+/**
+ * localstory
+ * A lightweight wrapper around browser *Storage APIs
+ *
+ * @author Ricardo Tomasi <ricardobeat@gmail.com>
+ */
 
 function serialize (value, options) {
     return JSON.stringify({
@@ -26,12 +32,6 @@ function timeInMs (ttl) {
     }
 }
 
-function safe (fn) {
-    return function () {
-        try { return fn.apply(this, arguments); } catch (e) { return false; }
-    }
-}
-
 function supportsStorage (store) {
     try {
         store.setItem('_', '_');
@@ -39,6 +39,12 @@ function supportsStorage (store) {
         return true;
     } catch (e) {
         return false;
+    }
+}
+
+var safe = function (fn) {
+    return function () {
+        try { return fn.apply(this, arguments); } catch (e) { return false; }
     }
 }
 
@@ -82,7 +88,6 @@ function createStorage (store, ns) {
         }),
 
         clear: safe(function () {
-            var self = this;
             return this.keys()
                 .filter(this.has.bind(this))
                 .forEach(this.unset.bind(this));
