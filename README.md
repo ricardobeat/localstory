@@ -9,6 +9,10 @@ A lightweight wrapper around local/sessionStorage APIs, featuring
 - silent failures for storage API (avoid try/catch)
 - zero dependencies
 
+```
+npm install localstory
+```
+
 ## Tests
 
 Run with `npm test`. Uses [tape](http://ghub.io/tape). 
