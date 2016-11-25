@@ -8,7 +8,7 @@ if (typeof localStorage === 'undefined') {
 
 var key = 'hello'
 var val = 'world'
-var store = localstory(localStorage)
+var store = localstory(localStorage, null, { vacuum: false })
 
 // clear localStorage before every test
 const test = Object.assign(function (name, fn) {
@@ -95,8 +95,8 @@ test('expires with decimal value', t => {
 test('namespaces', t => {
     t.plan(4)
 
-    const s1 = localstory(localStorage, 'a')
-    const s2 = localstory(localStorage, 'b')
+    const s1 = localstory(localStorage, 'a', { vacuum: false })
+    const s2 = localstory(localStorage, 'b', { vacuum: false })
 
     s1.set(key, 11)
     s2.set(key, 22)
@@ -157,12 +157,12 @@ test('vacuum', t => {
 })
 
 
-test('vacuum some time after startup', t => {
+test('schedule vacuum on init', t => {
     t.plan(2)
 
     store.set(key, val, { ttl: 5 })
-    const s2 = localstory(localStorage) // should schedule a vacuum call
-
+    const s2 = localstory(localStorage, null, { vacuum: 10 }) // should schedule a vacuum call
     t.equal(localStorage.length, 1)
-    setTimeout(_ => t.equal(localStorage.length, 0), 250)
+
+    setTimeout(_ => t.equal(localStorage.length, 0), 30)
 })

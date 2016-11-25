@@ -110,7 +110,7 @@ function createStorage (store, ns, config) {
     if (config.vacuum !== false) {
         setTimeout(function () {
             story.vacuum();
-        }, 142);
+        }, parseInt(config.vacuum) || 3000);
     }
 
     return story;
