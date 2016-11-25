@@ -48,8 +48,9 @@ var safe = function (fn) {
     }
 }
 
-function createStorage (store, ns) {
-
+function createStorage (store, ns, config) {
+    config || (config = {});
+    
     var PREFIX = '_' + (ns || 'bs') + '_';
 
     if (!supportsStorage(store)) {
@@ -60,7 +61,7 @@ function createStorage (store, ns) {
         ttl: '90d'
     };
 
-    return {
+    var story = {
 
         get: safe(function (key) {
             var value = store.getItem(PREFIX + key);
@@ -105,6 +106,14 @@ function createStorage (store, ns) {
             return keys;
         })
     }
+
+    if (config.vacuum !== false) {
+        setTimeout(function () {
+            story.vacuum();
+        }, 142);
+    }
+
+    return story;
 }
 
 module.exports = createStorage;

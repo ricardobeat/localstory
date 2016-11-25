@@ -155,3 +155,14 @@ test('vacuum', t => {
         t.equal(store.get('x1'), undefined)
     }, 10)
 })
+
+
+test('vacuum some time after startup', t => {
+    t.plan(2)
+
+    store.set(key, val, { ttl: 5 })
+    const s2 = localstory(localStorage) // should schedule a vacuum call
+
+    t.equal(localStorage.length, 1)
+    setTimeout(_ => t.equal(localStorage.length, 0), 250)
+})
