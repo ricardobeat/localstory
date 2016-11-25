@@ -80,7 +80,16 @@ test('expires', t => {
     store.set(key, val, { ttl: 50 })
 
     setTimeout(_ => t.equal(store.get(key), val), 30)
-    setTimeout(_ => t.equal(store.get(key), undefined), 100);
+    setTimeout(_ => t.equal(store.get(key), undefined), 80);
+})
+
+test('expires with decimal value', t => {
+    t.plan(2)
+
+    store.set(key, val, { ttl: '0,05s' })
+
+    setTimeout(_ => t.equal(store.get(key), val), 30)
+    setTimeout(_ => t.equal(store.get(key), undefined), 80);
 })
 
 test('namespaces', t => {

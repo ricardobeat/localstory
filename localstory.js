@@ -10,9 +10,9 @@ function timeInMs (ttl) {
     if (typeof ttl === 'number') {
         return ttl;
     } else if (typeof ttl === 'string') {
-        var matches = ttl.toLowerCase().match(/^(\d+)([smhd])$/);
+        var matches = ttl.toLowerCase().replace(',', '.').match(/^([\d.]+)([smhd])$/);
         if (matches) {
-            var value = matches[1], unit = matches[2];
+            var value = Number(matches[1]), unit = matches[2];
             switch (unit) {
                 case 's': return value * 1000;
                 case 'm': return value * 1000 * 60;
