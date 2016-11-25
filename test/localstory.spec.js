@@ -124,9 +124,25 @@ test('keys', t => {
     t.plan(1)
 
     store.clear()
+
     store.set('a', 1)
     store.set('b', 2)
     store.set('c', 3)
 
     t.deepEqual(store.keys(), ['a', 'b', 'c'])
+})
+
+test('vacuum', t => {
+    t.plan(3)
+
+    store.set('x1', 1, { ttl: 1 })
+    store.set('x2', 1, { ttl: 1 })
+    store.set('x3', 1, { ttl: 1 })
+
+    setTimeout(_ => {
+        t.deepEqual(store.keys(), ['x1', 'x2', 'x3'])
+        store.vacuum()
+        t.deepEqual(store.keys(), [])
+        t.equal(store.get('x1'), undefined)
+    }, 10)
 })

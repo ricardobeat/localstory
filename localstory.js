@@ -61,7 +61,7 @@ function createStorage (store, ns) {
             if (value) {
                 var ret = JSON.parse(value.slice(PREFIX.length));
                 if (ret._expires <= Date.now()) {
-                    return this.unset(PREFIX + key);
+                    return store.removeItem(PREFIX + key);
                 } else {
                     return ret._value;
                 }
@@ -86,6 +86,10 @@ function createStorage (store, ns) {
             return this.keys()
                 .filter(this.has.bind(this))
                 .forEach(this.unset.bind(this));
+        }),
+
+        vacuum: safe(function () {
+            this.keys().forEach(this.get.bind(this));
         }),
 
         keys: safe(function () {
