@@ -1,5 +1,7 @@
 # localstory
 
+![](https://img.shields.io/npm/v/localstory.svg) ![](https://img.shields.io/badge/status-awesome-blue.svg)
+
 A lightweight wrapper around local/sessionStorage APIs, featuring
 
 - namespaces
