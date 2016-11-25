@@ -38,7 +38,6 @@ function supportsStorage (store) {
         store.removeItem('_');
         return true;
     } catch (e) {
-        console.error(e);
         return false;
     }
 }
