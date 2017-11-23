@@ -1,9 +1,25 @@
 /**
- * localstory
- * A lightweight wrapper around browser *Storage APIs
- *
- * @author Ricardo Tomasi <ricardobeat@gmail.com>
- */
+
+localstory
+==========
+
+A lightweight wrapper around browser *Storage APIs
+
+@author Ricardo Tomasi <ricardobeat@gmail.com>
+@link http://github.com/ricardobeat/localstory
+
+Usage:
+
+    const store = require('localstory')(window.localStorage, 'mynamespace', { ttl: '2h' })
+
+    store.set('foo', 'bar')
+    store.get('foo') -> 'bar'
+    store.unset('foo')
+    store.keys() -> ['foo']
+    store.unset('foo')
+    store.clear()
+
+*/
 
 function serialize (value, options) {
     return JSON.stringify({

@@ -1,6 +1,6 @@
 {
   "name": "localstory",
-  "version": "0.7.41",
+  "version": "0.8.0",
   "description": "Light wrapper around browser *Storage API, IE8+",
   "main": "localstory.js",
   "scripts": {
