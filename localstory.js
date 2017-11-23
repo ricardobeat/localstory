@@ -130,7 +130,11 @@ function createStorage (store, ns, config) {
 
     if (config.vacuum !== false) {
         setTimeout(function () {
-            story.vacuum();
+            if (typeof requestIdleCallback === 'function') {
+                requestIdleCallback(function(){ story.vacuum() })
+            } else {
+                story.vacuum();
+            }
         }, +config.vacuum || 8000);
     }
 
