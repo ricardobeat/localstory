@@ -146,8 +146,8 @@ test('clear', t => {
     t.equal(store.get('c'), undefined)
 })
 
-test('keys', t => {
-    t.plan(1)
+test('keys() & values()', t => {
+    t.plan(2)
 
     store.clear()
 
@@ -156,6 +156,7 @@ test('keys', t => {
     store.set('c', 3)
 
     t.deepEqual(store.keys(), ['a', 'b', 'c'])
+    t.deepEqual(store.values(), [1, 2, 3])
 })
 
 test('vacuum', t => {

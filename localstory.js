@@ -60,7 +60,7 @@ function supportsStorage (store) {
 
 var safe = function (fn) {
     return function () {
-        try { return fn.apply(this, arguments); } catch (e) { return false; }
+        try { return fn.apply(this, arguments); } catch (e) { return undefined; }
     }
 }
 
@@ -121,6 +121,10 @@ function createStorage (store, ns, config) {
                 if (key.indexOf(PREFIX) === 0) keys.push(key.slice(PREFIX.length));
             }
             return keys;
+        }),
+
+        values: safe(function () {
+            return this.keys().map(this.get.bind(this))
         })
     }
 
