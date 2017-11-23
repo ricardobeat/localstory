@@ -50,7 +50,7 @@ var safe = function (fn) {
 
 function createStorage (store, ns, config) {
     config || (config = {});
-    
+
     var PREFIX = '_' + (ns || 'bs') + '_';
 
     if (!supportsStorage(store)) {
@@ -101,7 +101,8 @@ function createStorage (store, ns, config) {
         keys: safe(function () {
             var keys = [];
             for (var i = 0; i < store.length; i++) {
-                keys.push(store.key(i).slice(PREFIX.length));
+                var key = store.key(i);
+                if (key.indexOf(PREFIX) === 0) keys.push(key.slice(PREFIX.length));
             }
             return keys;
         })

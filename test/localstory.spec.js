@@ -19,12 +19,13 @@ const test = Object.assign(function (name, fn) {
 }, tapeTest)
 
 test('api', t => {
-    t.plan(4)
+    t.plan(5)
 
-    t.equal(typeof store.get, 'function')
-    t.equal(typeof store.set, 'function')
-    t.equal(typeof store.unset, 'function')
-    t.equal(typeof store.clear, 'function')
+    t.equal(typeof store.get, 'function', 'get')
+    t.equal(typeof store.set, 'function', 'set')
+    t.equal(typeof store.unset, 'function', 'unset')
+    t.equal(typeof store.clear, 'function', 'clear')
+    t.equal(typeof store.vacuum, 'function', 'vacuum')
 })
 
 test('get / set item', t => {
@@ -101,14 +102,30 @@ test('namespaces', t => {
     s1.set(key, 11)
     s2.set(key, 22)
 
-    t.equal(s1.get(key), 11)
+    t.equal(s1.get(key), 11, 'namespace a')
     s1.unset(key)
 
-    t.equal(s2.get(key), 22)
+    t.equal(s2.get(key), 22, 'namespace b')
     s2.unset(key)
 
-    t.equal(s1.get(key), undefined)
-    t.equal(s2.get(key), undefined)
+    t.equal(s1.get(key), undefined, 'unset namespace a')
+    t.equal(s2.get(key), undefined, 'unset namespace b')
+})
+
+test('keys() by namespace', t => {
+    t.plan(2)
+
+    const s1 = localstory(localStorage, 'a', { vacuum: false })
+    const s2 = localstory(localStorage, 'b', { vacuum: false })
+
+    s1.set('x', 1)
+    s1.set('y', 2)
+
+    s2.set('a', 1)
+    s2.set('b', 2)
+
+    t.deepEqual(s1.keys(), ['x', 'y'], 'keys from a')
+    t.deepEqual(s2.keys(), ['a', 'b'], 'keys from b')
 })
 
 test('clear', t => {
@@ -155,7 +172,6 @@ test('vacuum', t => {
         t.equal(store.get('x1'), undefined)
     }, 10)
 })
-
 
 test('schedule vacuum on init', t => {
     t.plan(2)
