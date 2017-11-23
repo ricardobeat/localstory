@@ -131,7 +131,7 @@ function createStorage (store, ns, config) {
     if (config.vacuum !== false) {
         setTimeout(function () {
             story.vacuum();
-        }, parseInt(config.vacuum) || 3000);
+        }, parseInt(config.vacuum, 10) || 3000);
     }
 
     return story;
