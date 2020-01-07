@@ -135,7 +135,7 @@ function createStorage (store, ns, config) {
             } else {
                 story.vacuum();
             }
-        }, +config.vacuum || 8000);
+        }, +config.vacuum || 60000);
     }
 
     return story;
