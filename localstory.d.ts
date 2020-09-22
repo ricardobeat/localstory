@@ -4,20 +4,21 @@ declare module "localstory" {
     vacuum?: boolean;
   };
 
-  type LSStore = {
-    get: (key: string) => any;
-    set: (key: string, value: any, options?: LSOptions) => void;
-    unset: (key: string) => void;
-    has: (key: string) => boolean;
+  type LSStore<T> = {
+    get: (key: keyof T) => T[keyof T];
+    set: (key: keyof T, value: unknown, options?: LSOptions) => void;
+    unset: (key: keyof T) => void;
+    has: (key: keyof T) => boolean;
     clear: () => void;
     vacuum: () => void;
-    keys: () => [string];
-    values: () => [any];
+    keys: () => (keyof T)[];
+    values: () => (T[keyof T])[];
   };
 
-  export default function(
-    store: any,
-    ns?: string,
-    options?: LSOptions
-  ): LSStore;
+  type LSCreateStore<T extends object = { [key: string]: unknown }> =
+    (store: T, ns?: string, options?: LSOptions) => LSStore<T>;
+
+  const createStore: LSCreateStore;
+  export default createStore;
 }
+
