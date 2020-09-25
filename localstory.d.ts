@@ -6,19 +6,15 @@ declare module "localstory" {
 
   type LSStore<T> = {
     get: (key: keyof T) => T[keyof T];
-    set: (key: keyof T, value: unknown, options?: LSOptions) => void;
+    set: <K extends keyof T>(key: K, value: T[K], options?: LSOptions) => void;
     unset: (key: keyof T) => void;
     has: (key: keyof T) => boolean;
     clear: () => void;
     vacuum: () => void;
     keys: () => (keyof T)[];
-    values: () => (T[keyof T])[];
+    values: () => T[keyof T][];
   };
 
-  type LSCreateStore<T extends object = { [key: string]: unknown }> =
-    (store: T, ns?: string, options?: LSOptions) => LSStore<T>;
-
-  const createStore: LSCreateStore;
+  function createStore<T extends object = Record<string, unknown>>(store: T, ns?: string, options?: LSOptions): LSStore<T>;
   export default createStore;
 }
-
