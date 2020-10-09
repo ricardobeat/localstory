@@ -32,8 +32,8 @@
   "homepage": "https://github.com/ricardobeat/localstory#readme",
   "dependencies": {},
   "devDependencies": {
+    "localstorage-memory": "^1.0.2",
     "tap-spec": "^4.1.1",
-    "tape": "^4.6.3",
-    "localstorage-memory": "^1.0.2"
+    "tape": "^4.13.3"
   }
 }
